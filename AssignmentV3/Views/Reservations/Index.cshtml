@@ -1,0 +1,105 @@
+﻿@model IEnumerable<AssignmentV3.Models.Reservation>
+
+@{
+    ViewBag.Title = "Book your consultation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<header id="header">
+    <div class="intro">
+        <div class="overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 intro-text">
+                        <h1>
+                            @ViewBag.Title
+                        </h1>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="section-title">
+        <h2>Please make a reservation for your consulation time.</h2>
+        <a href="/Reservations/Create" class="btn btn-custom btn-lg page-scroll">Create New</a>
+    </div>
+    
+    <table id="table" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Program.ProgramName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DatetimeStart)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DatetimeEnd)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Comment)
+                </th>
+                @*
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.memberEmail)
+                    </th>
+                *@
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Program.ProgramName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatetimeStart)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatetimeEnd)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.Raw(item.Comment)
+                    </td>
+                    @*
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.memberEmail)
+                        </td>
+                    *@
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+    @section Scripts {
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#table').DataTable();
+            });
+        </script>
+    }

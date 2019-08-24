@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BusinessDB.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="BusinessDBStoreContainer">
+    <EntitySet Name="Programs" EntityType="BusinessDB.Store.Programs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Reservations" EntityType="BusinessDB.Store.Reservations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FavoritePrograms" EntityType="BusinessDB.Store.FavoritePrograms" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ProgramFavoriteProgram" Association="BusinessDB.Store.ProgramFavoriteProgram">
+      <End Role="Program" EntitySet="Programs" />
+      <End Role="FavoriteProgram" EntitySet="FavoritePrograms" />
+    </AssociationSet>
+    <AssociationSet Name="ProgramReservation" Association="BusinessDB.Store.ProgramReservation">
+      <End Role="Program" EntitySet="Programs" />
+      <End Role="Reservation" EntitySet="Reservations" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Programs">
+    <Key>
+      <PropertyRef Name="ProgramId" />
+    </Key>
+    <Property Name="ProgramId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProgramName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ProgramDesc" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ProgramPrice" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Reservations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProgramId" Type="int" Nullable="false" />
+    <Property Name="DatetimeStart" Type="datetime" Nullable="false" />
+    <Property Name="DatetimeEnd" Type="datetime" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="memberEmail" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FavoritePrograms">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProgramId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="ProgramFavoriteProgram">
+    <End Role="Program" Type="BusinessDB.Store.Programs" Multiplicity="1" />
+    <End Role="FavoriteProgram" Type="BusinessDB.Store.FavoritePrograms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramId" />
+      </Principal>
+      <Dependent Role="FavoriteProgram">
+        <PropertyRef Name="ProgramId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProgramReservation">
+    <End Role="Program" Type="BusinessDB.Store.Programs" Multiplicity="1" />
+    <End Role="Reservation" Type="BusinessDB.Store.Reservations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Program">
+        <PropertyRef Name="ProgramId" />
+      </Principal>
+      <Dependent Role="Reservation">
+        <PropertyRef Name="ProgramId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="BusinessDB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="BusinessDBContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Programs" EntityType="BusinessDB.Program" />
+          <EntitySet Name="Reservations" EntityType="BusinessDB.Reservation" />
+          <EntitySet Name="FavoritePrograms" EntityType="BusinessDB.FavoriteProgram" />
+          <AssociationSet Name="ProgramFavoriteProgram" Association="BusinessDB.ProgramFavoriteProgram">
+            <End Role="Program" EntitySet="Programs" />
+            <End Role="FavoriteProgram" EntitySet="FavoritePrograms" />
+          </AssociationSet>
+          <AssociationSet Name="ProgramReservation" Association="BusinessDB.ProgramReservation">
+            <End Role="Program" EntitySet="Programs" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Program">
+          <Key>
+            <PropertyRef Name="ProgramId" />
+          </Key>
+          <Property Name="ProgramId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProgramName" Type="String" Nullable="false" />
+          <Property Name="ProgramDesc" Type="String" Nullable="false" />
+          <Property Name="ProgramPrice" Type="Double" Nullable="false" />
+          <NavigationProperty Name="FavoritePrograms" Relationship="BusinessDB.ProgramFavoriteProgram" FromRole="Program" ToRole="FavoriteProgram" />
+          <NavigationProperty Name="Reservations" Relationship="BusinessDB.ProgramReservation" FromRole="Program" ToRole="Reservation" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Program" Relationship="BusinessDB.ProgramReservation" FromRole="Reservation" ToRole="Program" />
+          <Property Name="ProgramId" Type="Int32" Nullable="false" />
+          <Property Name="DatetimeStart" Type="DateTime" Nullable="false" />
+          <Property Name="DatetimeEnd" Type="DateTime" Nullable="false" />
+          <Property Name="Comment" Type="String" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" />
+          <Property Name="memberEmail" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FavoriteProgram">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProgramId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" />
+          <NavigationProperty Name="Program" Relationship="BusinessDB.ProgramFavoriteProgram" FromRole="FavoriteProgram" ToRole="Program" />
+        </EntityType>
+        <Association Name="ProgramFavoriteProgram">
+          <End Type="BusinessDB.Program" Role="Program" Multiplicity="1" />
+          <End Type="BusinessDB.FavoriteProgram" Role="FavoriteProgram" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Program">
+              <PropertyRef Name="ProgramId" />
+            </Principal>
+            <Dependent Role="FavoriteProgram">
+              <PropertyRef Name="ProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProgramReservation">
+          <End Type="BusinessDB.Program" Role="Program" Multiplicity="1" />
+          <End Type="BusinessDB.Reservation" Role="Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Program">
+              <PropertyRef Name="ProgramId" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="ProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BusinessDBStoreContainer" CdmEntityContainer="BusinessDBContainer">
+    <EntitySetMapping Name="Programs">
+      <EntityTypeMapping TypeName="IsTypeOf(BusinessDB.Program)">
+        <MappingFragment StoreEntitySet="Programs">
+          <ScalarProperty Name="ProgramId" ColumnName="ProgramId" />
+          <ScalarProperty Name="ProgramName" ColumnName="ProgramName" />
+          <ScalarProperty Name="ProgramDesc" ColumnName="ProgramDesc" />
+          <ScalarProperty Name="ProgramPrice" ColumnName="ProgramPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reservations">
+      <EntityTypeMapping TypeName="IsTypeOf(BusinessDB.Reservation)">
+        <MappingFragment StoreEntitySet="Reservations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProgramId" ColumnName="ProgramId" />
+          <ScalarProperty Name="DatetimeStart" ColumnName="DatetimeStart" />
+          <ScalarProperty Name="DatetimeEnd" ColumnName="DatetimeEnd" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="memberEmail" ColumnName="memberEmail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FavoritePrograms">
+      <EntityTypeMapping TypeName="IsTypeOf(BusinessDB.FavoriteProgram)">
+        <MappingFragment StoreEntitySet="FavoritePrograms">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProgramId" ColumnName="ProgramId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

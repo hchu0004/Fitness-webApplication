@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="34a4313e6f1b4cb7ab06dd5abf7ddbf1" Name="Diagram1" >
+        <EntityTypeShape EntityType="BusinessDB.Program" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BusinessDB.Reservation" Width="1.5" PointX="0.875" PointY="4" />
+        <EntityTypeShape EntityType="BusinessDB.FavoriteProgram" Width="1.5" PointX="3.375" PointY="0.75" />
+        <AssociationConnector Association="BusinessDB.ProgramFavoriteProgram" />
+        <AssociationConnector Association="BusinessDB.ProgramReservation" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

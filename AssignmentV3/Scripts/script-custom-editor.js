@@ -1,0 +1,43 @@
+﻿
+/*
+$(document).ready(function () {
+    // Initialize Editor  
+    $('.textarea-editor').summernote({
+        height: 300, // set editor height  
+        minHeight: null, // set minimum height of editor  
+        maxHeight: null, // set maximum height of editor  
+        focus: true // set focus to editable area after initializing summernote  
+        
+    });
+
+    var content = $('.summernote').summernote('code');
+    return content;
+});  
+
+*/
+
+
+
+(function ($) {
+    function HomeIndex() {
+        var $this = this;
+
+        function initialize() {
+            $('#Comment').summernote({
+                focus: true,
+                height: 150,
+                codemirror: {
+                    theme: 'united'
+                }
+            });
+        }
+
+        $this.init = function () {
+            initialize();
+        }
+    }
+    $(function () {
+        var self = new HomeIndex();
+        self.init();
+    })
+}(jQuery))  
